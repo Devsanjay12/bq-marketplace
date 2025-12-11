@@ -1,6 +1,8 @@
 import { Header } from "@/components/shared/header";
 import { CategoryList } from "@/components/marketplace/category-list";
 
+export const dynamic = 'force-dynamic';
+
 export default function CategoriesPage() {
     return (
         <div className="min-h-screen bg-background">
