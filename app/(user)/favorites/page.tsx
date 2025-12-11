@@ -29,7 +29,7 @@ export default function FavoritesPage() {
                 </div>
 
                 {bookmarks.length > 0 ? (
-                    <ToolGrid tools={bookmarks} />
+                    <ToolGrid tools={bookmarks as any} />
                 ) : (
                     <div className="text-center py-12 border rounded-lg bg-muted/20">
                         <p className="text-muted-foreground mb-4">
