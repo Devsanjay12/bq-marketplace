@@ -32,7 +32,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <Header />
             <main className="container px-4 md:px-6 py-8">
                 <h1 className="text-3xl font-bold mb-8 capitalize">{params.slug} Tools</h1>
-                <ToolGrid tools={tools} />
+                <ToolGrid tools={tools as any} />
             </main>
         </div>
     );

@@ -49,7 +49,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                     </div>
                 )}
 
-                <ToolGrid tools={tools} />
+                <ToolGrid tools={tools as any} />
 
                 {!query && (
                     <div className="text-center text-muted-foreground mt-12">

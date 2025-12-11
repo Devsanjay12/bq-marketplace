@@ -1,4 +1,4 @@
-import { Tool } from "@prisma/client";
+import { Tool } from "@/types";
 import { ToolCard } from "./tool-card";
 
 interface ToolGridProps {

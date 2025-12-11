@@ -31,11 +31,11 @@ export default async function Home() {
                 <div className="container px-4 md:px-6 space-y-12 pb-20">
                     <CategoryList />
 
-                    <ToolGrid title="Featured Tools" tools={featuredTools} />
+                    <ToolGrid title="Featured Tools" tools={featuredTools as any} />
 
-                    <ToolGrid title="Trending This Week" tools={trendingTools} />
+                    <ToolGrid title="Trending This Week" tools={trendingTools as any} />
 
-                    <ToolGrid title="New Arrivals" tools={newTools} />
+                    <ToolGrid title="New Arrivals" tools={newTools as any} />
                 </div>
             </main>
         </div>
