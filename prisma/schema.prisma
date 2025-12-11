@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  name          String?
+  role          Role       @default(USER)
+  image         String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  
+  tools         Tool[]     @relation("VendorTools")
+  reviews       Review[]
+  favorites     Favorite[]
+}
+
+enum Role {
+  USER
+  VENDOR
+  ADMIN
+}
+
+model Tool {
+  id                String       @id @default(cuid())
+  name              String
+  slug              String       @unique
+  company           String
+  description       String       @db.Text
+  shortDescription  String?
+  category          Category
+  pricingModel      PricingModel
+  pricingDetails    Json?
+  
+  // URLs
+  websiteUrl        String
+  githubUrl         String?
+  
+  // Media
+  logo              String       // Uploadthing URL
+  screenshots       Json?        // Array of URLs
+  demoVideo         String?
+  
+  // Features
+  features          Json?        // Array of strings
+  integrations      Json?        // Array of integration names
+  limitations       Json?        // Array of limitation strings
+  roi               Json?        // { estimated_hours_saved, cost_per_month, break_even_weeks }
+  compatibility     Json?        // { works_with: [], conflicts_with: [] }
+  
+  // Metadata
+  verified          Boolean      @default(false)
+  featured          Boolean      @default(false)
+  trending          Boolean      @default(false)
+  views             Int          @default(0)
+  clicks            Int          @default(0)
+  
+  // Relations
+  vendorId          String
+  vendor            User         @relation("VendorTools", fields: [vendorId], references: [id])
+  reviews           Review[]
+  favorites         Favorite[]
+  analytics         Analytics[]
+  
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  
+  @@index([category])
+  @@index([pricingModel])
+  @@index([featured])
+  @@index([trending])
+}
+
+enum Category {
+  CODING
+  WRITING
+  DESIGN
+  DATA
+  MARKETING
+  BUSINESS
+  AUDIO
+  VIDEO
+  AGENTS
+  PRODUCTIVITY
+  EDUCATION
+  OTHER
+}
+
+enum PricingModel {
+  FREE
+  FREEMIUM
+  PAID
+  OPENSOURCE
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  toolId    String
+  userId    String
+  rating    Int      // 1-5
+  comment   String?  @db.Text
+  helpful   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  tool      Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+  
+  @@unique([toolId, userId]) // One review per user per tool
+  @@index([toolId])
+}
+
+model Favorite {
+  userId    String
+  toolId    String
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id])
+  tool      Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  
+  @@id([userId, toolId])
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  toolId    String
+  date      DateTime @default(now())
+  views     Int      @default(0)
+  clicks    Int      @default(0)
+  
+  tool      Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  
+  @@index([toolId, date])
+}
