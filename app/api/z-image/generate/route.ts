@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
         // Rate limiting: 10 generations per user/IP per hour
         const identifier = session?.user?.id || req.headers.get('x-forwarded-for') || 'anonymous';
-        const rateLimitResult = await rateLimit(identifier, 10, '1h');
+        const rateLimitResult = await rateLimit(identifier, 10, 3600000); // 1 hour in ms
 
         if (!rateLimitResult.success) {
             return NextResponse.json(

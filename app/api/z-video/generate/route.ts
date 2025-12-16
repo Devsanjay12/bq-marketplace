@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
         // Rate limiting: 5 generations per user/IP per hour (stricter for video)
         const identifier = session?.user?.id || req.headers.get('x-forwarded-for') || 'anonymous';
-        const rateLimitResult = await rateLimit(identifier, 5, '1h');
+        const rateLimitResult = await rateLimit(identifier, 5, 3600000); // 1 hour in ms
 
         if (!rateLimitResult.success) {
             return NextResponse.json(
