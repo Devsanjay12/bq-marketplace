@@ -48,7 +48,47 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'www.tabnine.com',
+                hostname: 'tempfile.aiquickdraw.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'via.placeholder.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.seeklogo.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'replit.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.notion.so',
+            },
+            {
+                protocol: 'https',
+                hostname: 'runwayml.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.openai.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'framerusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'pbs.twimg.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'yt3.googleusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'logowik.com',
             }
         ],
     },

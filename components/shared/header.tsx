@@ -18,7 +18,7 @@ export function Header() {
                     <Link href="/" className="mr-6 flex items-center space-x-2">
                         <Sparkles className="h-6 w-6 text-primary" />
                         <span className="hidden font-bold sm:inline-block">
-                            BQ Marketplace
+                            Blaqhole
                         </span>
                     </Link>
                     <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -40,6 +40,12 @@ export function Header() {
                         >
                             AI Assistant
                         </Link>
+                        <Link
+                            href="/z-image"
+                            className={pathname === "/z-image" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
+                        >
+                            Z-Image
+                        </Link>
                     </nav>
                 </div>
                 <Sheet>
@@ -55,7 +61,7 @@ export function Header() {
                     <SheetContent side="left" className="pr-0">
                         <Link href="/" className="flex items-center">
                             <Sparkles className="mr-2 h-4 w-4" />
-                            <span className="font-bold">BQ Marketplace</span>
+                            <span className="font-bold">Blaqhole</span>
                         </Link>
                         <nav className="flex flex-col gap-4 mt-4">
                             <Link href="/browse" className="text-sm font-medium">Browse</Link>

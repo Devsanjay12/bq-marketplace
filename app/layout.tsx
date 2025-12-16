@@ -17,8 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-    title: "BQ - AI Tool Discovery",
-    description: "Find the best AI tools for your needs with real-time research.",
+    title: "Blaqhole - AI Creative Suite",
+    description: "Unleash your creativity with Blaqhole's advanced AI tools.",
 };
 
 export default function RootLayout({

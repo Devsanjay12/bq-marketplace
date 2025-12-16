@@ -19,6 +19,8 @@ model User {
   tools         Tool[]     @relation("VendorTools")
   reviews       Review[]
   favorites     Favorite[]
+  zImageGenerations ZImageGeneration[]
+  zVideoGenerations ZVideoGeneration[]
 }
 
 enum Role {
@@ -67,6 +69,7 @@ model Tool {
   reviews           Review[]
   favorites         Favorite[]
   analytics         Analytics[]
+
   
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
@@ -75,6 +78,42 @@ model Tool {
   @@index([pricingModel])
   @@index([featured])
   @@index([trending])
+}
+
+// ... existing enums ...
+
+model ZImageGeneration {
+  id            String   @id @default(cuid())
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id])
+  
+  // Generation details
+  taskId        String   @unique
+  prompt        String   @db.Text
+  aspectRatio   String
+  
+  // Status tracking
+  status        GenerationStatus @default(PENDING)
+  resultUrl     String?
+  failReason    String?
+  
+  // Metrics
+  consumeCredits Int?
+  costTime      Int?      // Seconds
+  
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  completedAt   DateTime?
+  
+  @@index([userId, createdAt])
+  @@index([taskId])
+}
+
+enum GenerationStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
 }
 
 enum Category {
@@ -137,4 +176,33 @@ model Analytics {
   tool      Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
   
   @@index([toolId, date])
+}
+
+model ZVideoGeneration {
+  id            String   @id @default(cuid())
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id])
+  
+  // Generation details
+  taskId        String   @unique
+  prompt        String   @db.Text
+  negativePrompt String? @db.Text
+  duration      String   // "5", "10"
+  aspectRatio   String   // "16:9", "9:16", "1:1"
+  resolution    String   // "720p", "1080p"
+  promptExpansion Boolean @default(true)
+  
+  // Result
+  status        String   // PENDING, PROCESSING, SUCCESS, FAILED
+  resultUrl     String?  @db.Text
+  failReason    String?  @db.Text
+  
+  // Metadata
+  createdAt     DateTime @default(now())
+  completedAt   DateTime?
+  costTime      Int?     // Time taken in seconds
+  consumeCredits Int?    // Credits consumed
+  
+  @@index([userId])
+  @@index([taskId])
 }
